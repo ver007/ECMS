@@ -1,0 +1,9 @@
+*.yml linguist-language=Python
+*.ipynb linguist-language=Python
+*.csv linguist-language=Python
+*.json linguist-language=Python
+*.h5 linguist-language=Python
+*.png linguist-language=Python
+*.js linguist-language=Python
+*.html linguist-language=Python
+*.css linguist-language=Python

@@ -1,0 +1,208 @@
+<html class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+{% load staticfiles %}
+<title>Education Management System</title>
+<meta name="description" content="这是一个 index 页面">
+<meta name="keywords" content="index">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="icon" type="image/png" href="{% static '/i/favicon.png' %}">
+<link rel="apple-touch-icon-precomposed" href="{% static '/i/app-icon72x72@2x.png' %}">
+<meta name="apple-mobile-web-app-title" content="Amaze UI" />
+<link rel="stylesheet" href="{% static '/css/amazeui.min.css' %}"/>
+<link rel="stylesheet" href="{% static '/css/admin.css' %}">
+<script src="{% static '/js/jquery.min.js' %}"></script>
+<script src="{% static '/js/app.js' %}"></script>
+</head>
+<script type="text/javascript">
+function chk(){
+    var all = document.getElementById("all");
+    var id = document.getElementsByName("id");
+    if(all.checked==true){
+        if(id.length){
+            for(var i=0;i<id.length;i++){
+                id[i].checked = true;
+            }
+        }
+        id.chcked=true;
+    }else{
+        if(id.length){
+            for(var i=0;i<id.length;i++){
+                id[i].checked = false;
+            }
+        }
+    }
+}
+</script>
+<style>
+    .hide{
+        display:none;
+    }
+    .shade{
+        position:fixed;
+        top:0;
+        right:0;
+        left:0;
+        bottom:0;
+        background:black;
+        opacity:0.6;
+        z-index:100;
+    }
+    .addModal{
+        position:fixed;
+        height:600px;
+        width:600px;
+        top:100px;
+        left:50%;
+        z-index:101;
+        border:1px solid red;
+        background:white;
+        margin-left:-200px;
+    }
+        #details{
+            position:absolute;
+            left:100px;
+            top:100px;
+        }
+        #detailsImg {
+            float:left;
+            position:relative;
+            left:200px;
+         }
+        #detailsText {
+            float:right;
+            position:relative;
+            left:500px;
+         }
+        label{
+            width:80px;
+            text-align:right;
+            display:inline-block;
+        }
+</style>
+<body>
+<header class="am-topbar admin-header">
+    <div class="am-topbar-brand"><img src="{% static '/i/logo.png' %}"></div>
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
+            <li class="am-dropdown tognzhi" data-am-dropdown>
+                <button class="am-btn am-btn-primary am-dropdown-toggle am-btn-xs am-radius am-icon-bell-o" data-am-dropdown-toggle> 消息管理<span class="am-badge am-badge-danger am-round">6</span></button>
+                <ul class="am-dropdown-content">
+                    <li class="am-dropdown-header">所有消息都在这里</li>
+                    <li><a href="#">未激活会员 <span class="am-badge am-badge-danger am-round">556</span></a></li>
+                    <li><a href="#">未激活代理 <span class="am-badge am-badge-danger am-round">69</span></a></li>
+                    <li><a href="#">未处理汇款</a></li>
+                    <li><a href="#">未发放提现</a></li>
+                    <li><a href="#">未发货订单</a></li>
+                    <li><a href="#">低库存产品</a></li>
+                    <li><a href="#">信息反馈</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</header>
+<div class="am-cf admin-main">
+{{ request.session.sidebarStr|safe }}
+<div class=" admin-content">
+    <div class="daohang">
+        <ul>
+            <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs"> 首页</button></li>
+            <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">二级<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
+        </ul>
+    </div>
+<div class="admin">
+	<!-- 在这里加入内容 -->
+    <form class="am-form am-g" method="post">
+        <div class="am-btn-toolbars am-btn-toolbar am-kg am-cf">
+            <ul>
+                <li>
+                    <div class="am-btn-group am-btn-group-xs">
+                        <select id="showType" name="type" data-am-selected="{btnWidth: 90, btnSize: 'sm', btnStyle: 'default'}">
+                            <option value="9" selected="selected">显示全部</option>
+                            <option value="1">1班（理科）</option>
+                            <option value="2">2班（理科）</option>
+                            <option value="3">3班（文科）</option>
+                            <option value="4">4班（文科）<option>
+                            <option value="5">5班（艺术）</option>
+                            <option value="6">6班（艺术）</option>
+                        </select>
+                    </div>
+                </li>
+                <li><button type="submit" class="am-btn am-radius am-btn-xs am-btn-success" style="margin-top: -1px;" onclick="this.form.action='//{{ 1 }}'">搜索</button></li>
+
+                <li><input type="search" name="vagueName" class="am-form-field am-input-sm am-input-xm" placeholder="关键字搜索" /></li>
+                <li><button type="submit" class="am-btn am-radius am-btn-xs am-btn-success" style="margin-top: -1px;" onclick="this.form.action='//'">搜索</button></li>
+            </ul>
+        </div>
+        <table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped">
+            <thead>
+                <tr class="am-success">
+                    <th class="table-check"><input id="all" type="checkbox" name="Ids" onclick="chk()"/></th>
+                    <th class="table-type">日期-时间</th>
+                    <th class="table-title">班级</th>
+                    <th class="table-type">学号</th>
+                    <th class="table-type">姓名</th>
+                    <th class="table-type">星期</th>
+                    <th class="table-type">节</th>
+                    <th class="table-type">备注</th>
+                    <th class="table-author am-hide-sm-only">是否出勤<i class="am-icon-check am-text-warning"></i><i class="am-icon-close am-text-primary"></i></th>
+                    <th width="163px" class="table-set">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in check %}
+                    <tr>
+                        <td><input type="checkbox" name="id" value="{{ item.id }}"/></td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.clazz }}</td>
+                        <td>{{ item.stu_number }}</td>
+                        <td>{{ item.stu_name }}</td>
+                        <td>{{ item.day }}</td>
+                        <td>{{ item.section }}</td>
+                        <td>{{ item.remark }}</td>
+                        <td class="am-hide-sm-only">
+                            {% if item.flag == 1 %}
+                                <i class="am-icon-check am-text-warning"></i>
+                            {% else %}
+                                <i class="am-icon-close am-text-primary"></i>
+                            {% endif %}
+                        </td>
+                        <td><div class="am-btn-toolbar">
+                            <div class="am-btn-group am-btn-group-xs">
+                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-round" type="button" onclick="window.location.href='/checkModifyPage/{{ currentPage }}?id={{ item.id }}';">
+                                <span class="am-icon-pencil-square-o"></span></button>
+                                <button class="am-btn am-btn-default am-btn-xs am-text-warning  am-round" type="button" onclick="window.location.href='/#/{{ currentPage }}/{{ item.id }}';">
+                                <span class="am-icon-copy"></span></button>
+                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-round" type="button" onclick="window.location.href='/delete/{{ currentPage }}/{{ item.id }}?sign={{ 2 }}';">
+                                <span class="am-icon-trash-o"></span></button>
+                            </div>
+                          </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="am-btn-group am-btn-group-xs">
+            <button type="submit" class="am-btn am-btn-default" onclick="this.form.action='/modCheck/{{ currentPage }}/{{ 1 }}'"><span class="am-icon-archive"></span>标为出勤</button>
+            <button type="submit" class="am-btn am-btn-default" onclick="this.form.action='/modCheck/{{ currentPage }}/{{ 0 }}'"><span class="am-icon-archive"></span>标为缺勤</button>
+            <button type="submit" class="am-btn am-btn-default" onclick="this.form.action='/deletes/{{ currentPage }}?sign={{ 2 }}'"><span class="am-icon-trash-o"></span>删除</button>
+        </div>
+        <ul class="am-pagination am-fr">
+            {{ pageStr }}
+        </ul>
+        </form>
+
+    <div class="foods">
+    	<ul>毕设</ul>
+    	<dl><a href="" title="返回头部" class="am-icon-btn am-icon-arrow-up"></a></dl>
+    </div>
+</div>
+</div>
+</div>
+<script src="{% static '/js/amazeui.min.js' %}"></script>
+</body>
+</html>

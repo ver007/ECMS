@@ -1,0 +1,5 @@
+/.idea
+/.vscode
+/requirements/*
+/deepface/face_database/*
+/deepface/model_store/*

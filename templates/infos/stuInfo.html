@@ -1,0 +1,325 @@
+<html class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+{% load staticfiles %}
+<title>Education Management System</title>
+<meta name="description" content="这是一个 index 页面">
+<meta name="keywords" content="index">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="icon" type="image/png" href="{% static '/i/favicon.png' %}">
+<link rel="apple-touch-icon-precomposed" href="{% static '/i/app-icon72x72@2x.png' %}">
+<meta name="apple-mobile-web-app-title" content="Amaze UI" />
+<link rel="stylesheet" href="{% static '/css/amazeui.min.css' %}"/>
+<link rel="stylesheet" href="{% static '/css/admin.css' %}">
+<script src="{% static '/js/jquery.min.js' %}"></script>
+<script src="{% static '/js/app.js' %}"></script>
+</head>
+<script type="text/javascript">
+        function chk(){
+            var all = document.getElementById("all");
+            var id = document.getElementsByName("id");
+            if(all.checked==true){
+                if(id.length){
+                    for(var i=0;i<id.length;i++){
+                        id[i].checked = true;
+                    }
+                }
+                id.chcked=true;
+            }else{
+                if(id.length){
+                    for(var i=0;i<id.length;i++){
+                        id[i].checked = false;
+                    }
+                }
+            }
+        }
+</script>
+<style>
+    .hide{
+        display:none;
+    }
+    .shade{
+        position:fixed;
+        top:0;
+        right:0;
+        left:0;
+        bottom:0;
+        background:black;
+        opacity:0.6;
+        z-index:100;
+    }
+    .addModal{
+        position:fixed;
+        height:600px;
+        width:600px;
+        top:100px;
+        left:50%;
+        z-index:101;
+        border:1px solid red;
+        background:white;
+        margin-left:-200px;
+    }
+        #details{
+            position:absolute;
+            left:100px;
+            top:100px;
+        }
+        #detailsImg {
+            float:left;
+            position:relative;
+            left:200px;
+         }
+        #detailsText {
+            float:right;
+            position:relative;
+            left:500px;
+         }
+        label{
+            width:80px;
+            text-align:right;
+            display:inline-block;
+        }
+</style>
+<body>
+<header class="am-topbar admin-header">
+<div class="am-topbar-brand"><img src="{% static '/i/logo.png' %}"></div>
+<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+<ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
+    <li class="am-dropdown tognzhi" data-am-dropdown>
+        <button class="am-btn am-btn-primary am-dropdown-toggle am-btn-xs am-radius am-icon-bell-o" data-am-dropdown-toggle> 消息管理<span class="am-badge am-badge-danger am-round">6</span></button>
+        <ul class="am-dropdown-content">
+            <li class="am-dropdown-header">所有消息都在这里</li>
+            <li><a href="#">未激活会员 <span class="am-badge am-badge-danger am-round">556</span></a></li>
+            <li><a href="#">未激活代理 <span class="am-badge am-badge-danger am-round">69</span></a></li>
+            <li><a href="#">未处理汇款</a></li>
+            <li><a href="#">未发放提现</a></li>
+            <li><a href="#">未发货订单</a></li>
+            <li><a href="#">低库存产品</a></li>
+            <li><a href="#">信息反馈</a></li>
+        </ul>
+    </li>
+
+</ul>
+</div>
+</header>
+<div class="am-cf admin-main">
+{{ request.session.sidebarStr|safe }}
+<div class=" admin-content">
+    <div class="daohang">
+        <ul>
+            <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs"> 首页</button></li>
+            <li><button type="button" class="am-btn am-btn-default am-radius am-btn-xs">二级<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a></button></li>
+        </ul>
+    </div>
+<div class="admin">
+	<!-- 在这里加入内容 -->
+    <form class="am-form am-g" method="post">
+	<div class="am-btn-toolbars am-btn-toolbar am-kg am-cf">
+        <ul>
+            <li>
+                <div class="am-btn-group am-btn-group-xs">
+                    <select id="showType" name="clazz" data-am-selected="{btnWidth: 90, btnSize: 'sm', btnStyle: 'default'}">
+                        <option value="9">显示全部</option>
+                        <option value="1">1班</option>
+                        <option value="2">2班</option>
+                        <option value="3">3班</option>
+                    </select>
+                </div>
+            </li>
+            <li><button type="submit" class="am-btn am-radius am-btn-xs am-btn-success" style="margin-top: -1px;" onclick="this.form.action='/stuInfo/{{ 1 }}?sign={{ 0 }}'">搜索</button></li>
+
+            <li><input type="search" name="vagueName" class="am-form-field am-input-sm am-input-xm" placeholder="关键字搜索" /></li>
+            <li><button type="submit" class="am-btn am-radius am-btn-xs am-btn-success" style="margin-top: -1px;" onclick="this.form.action='/vague/?sign={{ 0 }}'">搜索</button></li>
+        </ul>
+	</div>
+        <table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped">
+            <thead>
+                <tr class="am-success">
+                    <th class="table-check"><input id="all" type="checkbox" name="Ids" onclick="chk()"/></th>
+                    <th class="table-title">学号</th>
+                    <th class="table-type">所属班级</th>
+                    <th class="table-type">姓名</th>
+                    <th class="table-type">性别</th>
+                    <th class="table-type">电话号码</th>
+                    <th class="table-type">电子邮箱</th>
+                    <th class="table-type">家庭住址</th>
+                    <th class="table-author am-hide-sm-only">是否在读 <i class="am-icon-check am-text-warning"></i> <i class="am-icon-close am-text-primary"></i></th>
+                    <th width="163px" class="table-set">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in Info %}
+                    <tr>
+                        <td><input type="checkbox" name="id" value="{{ item.id }}"/></td>
+                        <td>{{ item.number }}</td>
+                        <td>{{ item.claz }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.sex }}</td>
+                        <td>{{ item.tel }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.address }}</td>
+                        <td class="am-hide-sm-only">
+                            {% if item.flag == 1 %}
+                                <i class="am-icon-check am-text-warning"></i>
+                            {% else %}
+                                <i class="am-icon-close am-text-primary"></i>
+                            {% endif %}
+                        </td>
+                        <td><div class="am-btn-toolbar">
+                            <div class="am-btn-group am-btn-group-xs">
+                                <button class="am-btn am-btn-default am-btn-xs am-text-success am-round" type="button" onclick="window.location.href='/details/{{ currentPage }}/{{ item.id }}/{{ 0 }}?sign={{ 0 }}';">
+                                <span class="am-icon-search"></span> </button>
+                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary am-round" type="button" onclick="window.location.href='/details/{{ currentPage }}/{{ item.id }}/{{ 1 }}?sign={{ 0 }}';">
+                                <span class="am-icon-pencil-square-o"></span></button>
+                                <button class="am-btn am-btn-default am-btn-xs am-text-warning  am-round" type="button" onclick="window.location.href='/copy/{{ currentPage }}/{{ item.id }}?sign={{ 0 }}';">
+                                <span class="am-icon-copy"></span></button>
+                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-round" type="button" onclick="window.location.href='/delete/{{ currentPage }}/{{ item.id }}?sign={{ 0 }}';">
+                                <span class="am-icon-trash-o"></span></button>
+                            </div>
+                          </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="am-btn-group am-btn-group-xs">
+            <button type="button" class="am-btn am-btn-default" id="addButton"><span class="am-icon-plus"></span>新增</button>
+            <button type="submit" class="am-btn am-btn-default" onclick="this.form.action='/deletes/{{ currentPage }}?sign={{ 0 }}'"><span class="am-icon-trash-o"></span>删除</button>
+            <button type="submit" class="am-btn am-btn-default" onclick="this.form.action='/modFlag/{{ currentPage }}/{{ 1 }}?sign={{ 0 }}'"><span class="am-icon-archive"></span>标为在读</button>
+            <button type="submit" class="am-btn am-btn-default" onclick="this.form.action='/modFlag/{{ currentPage }}/{{ 0 }}?sign={{ 0 }}'"><span class="am-icon-archive"></span>标为退学</button>
+        </div>
+        <ul class="am-pagination am-fr">
+            {{ pageStr }}
+        </ul>
+        </form>
+        <div class="shade hide"></div>
+        <div class="addModal hide">
+            <form id="form_data" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p>
+                    <label for="number">学号：</label>
+                    <input tpye="text" id='number' name='number'/>
+                </p>
+                <p>
+                    <label for="name">姓名：</label>
+                    <input tpye="text" id='name' name='name'/>
+                </p>
+                <p>
+                    <label for="sex">性别：</label>
+                    <input tpye="text" id='sex' name='sex'/>
+                </p>
+                <p>
+                    <label for="claz">所属班级：</label>
+                    <input tpye="text" id='claz' name='claz'/>
+                </p>
+                <p>
+                    <label for="tel">手机号：</label>
+                    <input tpye="text" id='tel' name='tel'/>
+                </p>
+                <p>
+                    <label for="email">电子邮箱：</label>
+                    <input tpye="text" id='email' name='email'/>
+                </p>
+                <p>
+                    <label for="address">家庭住址：</label>
+                    <input tpye="text" id='address' name='address'/>
+                </p>
+                <p>
+                    <label for="type">职工类型：</label>
+                    <select id="type" name="type">
+                        <option value="0">学生</option>
+                        <option value="1">老师</option>
+                        <option value="2">修理工</option>
+                        <option value="3">主任</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="flag">是否在读：</label>
+                    <select id="flag" name="flag">
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="img">照片：</label>
+                    <input type="file" id='img' name="img" style="display: inline-block;"/>
+                </p>
+                <p>
+                    <label for="remarks">备注：</label>
+                    <textarea id='remarks' name="remarks" rows="4" cols="50" maxlength="100"></textarea>
+                </p>
+                <p>
+                    <input id="ajax_submit" type="submit" value="提交">
+                    <input type="button" id="cancel" value="取消">
+                    <span id="error_msg" style="color: red;"></span>
+                </p>
+            </form>
+        </div>
+
+        <script>
+            $(function(){
+                $('#addButton').click(function(){
+                    $('.shade,.addModal').removeClass('hide');
+                })
+                $('#cancel').click(function(){
+                    $('.shade,.addModal').addClass('hide');
+                })
+                $('#ajax_submit').click(function(){
+                    var formdata = new FormData();
+                    var img = $('#img')[0].files[0] ;
+                    var number = $('#number').val();
+                    var name = $('#name').val();
+                    var sex = $('#sex').val();
+                    var claz = $('#claz').val();
+                    var tel = $('#tel').val();
+                    var email = $('#email').val();
+                    var address = $('#address').val();
+                    var type = $('#type').val();
+                    var flag = $('#flag').val();
+                    var remarks = $('#remarks').val();
+                    formdata.append('number',number);
+                    formdata.append('name',name);
+                    formdata.append('sex',sex);
+                    formdata.append('claz',claz);
+                    formdata.append('tel',tel);
+                    formdata.append('email',email);
+                    formdata.append('address',address);
+                    formdata.append('type',type);
+                    formdata.append('flag',flag);
+                    formdata.append('img',img);
+                    formdata.append('remarks',remarks);
+                    formdata.append('csrfmiddlewaretoken',$('[name="csrfmiddlewaretoken"]').val());
+                    $.ajax({
+                        url:"/addInfo/?sign={{ 0 }}",
+                        type:"POST",
+                        processData:false,
+                        contentType:false,
+                        cache:false,
+                        data:formdata,
+                        success:function(data){
+                            var obj = JSON.parse(data);
+                            if(obj.status){
+                                location.reload()
+                            }else{
+                                $('#error_msg').text(obj.error);
+                            }
+                        }
+                    })
+                    return false;
+                })
+            })
+        </script>
+    <div class="foods">
+    	<ul>毕设</ul>
+    	<dl><a href="" title="返回头部" class="am-icon-btn am-icon-arrow-up"></a></dl>
+    </div>
+</div>
+</div>
+</div>
+<script src="{% static '/js/amazeui.min.js' %}"></script>
+</body>
+</html>
