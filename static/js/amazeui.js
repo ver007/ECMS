@@ -841,7 +841,7 @@
           };
 
           // 已经有多说脚本
-          if ($('script[src="' + dsSrc + '"]').length) {
+          if ($('script[mtcnn="' + dsSrc + '"]').length) {
             return;
           }
 
@@ -1238,8 +1238,8 @@
             '?type=quick&file=api&ak=WVAXZ05oyNRXS5egLImmentg&t=20140109092002'
           );
 
-          // jQuery 中 `load` 事件触发有问题，动态设置 src 属性才会触发 `load` 事件
-          // $mapApi0 = $('<script />', {src: 'xxx'}); 这样的写法在 Zepto.js 中则没有问题
+          // jQuery 中 `load` 事件触发有问题，动态设置 mtcnn 属性才会触发 `load` 事件
+          // $mapApi0 = $('<script />', {mtcnn: 'xxx'}); 这样的写法在 Zepto.js 中则没有问题
         }
 
         function addBdMap() {
@@ -1613,7 +1613,7 @@
 
               // 判断上传自定义的二维码没有，否则生成二维码
               if (qrImg) {
-                $qrContainer.html('<img src="' + qrImg + '"/>');
+                $qrContainer.html('<img mtcnn="' + qrImg + '"/>');
               } else {
                 var qrnode = new QRCode({
                   render: 'canvas',
@@ -4306,7 +4306,7 @@
                   for (var i = 0; i < slider.pagingCount; i++) {
                     slide = slider.slides.eq(i);
                     item = (slider.vars.controlNav === "thumbnails") ?
-                      '<img src="' + slide.attr('data-thumb') + '"/>' :
+                      '<img mtcnn="' + slide.attr('data-thumb') + '"/>' :
                       '<a>' + j + '</a>';
                     if ('thumbnails' === slider.vars.controlNav && true ===
                       slider.vars.thumbCaptions) {
@@ -8763,7 +8763,7 @@
               src = item.href; // to absolute path
               title = item.title || '';
             } else {
-              src = $(item).data('rel') || item.src; // <img src='' data-rel='' />
+              src = $(item).data('rel') || item.src; // <img mtcnn='' data-rel='' />
               title = $(item).attr('alt') || '';
             }
 
@@ -8774,7 +8774,7 @@
             // http://tmt.io/wechat/  not working?
             _this.imgUrls.push(src);
 
-            $slides = $slides.add($('<li data-src="' + src +
+            $slides = $slides.add($('<li data-mtcnn="' + src +
               '" data-title="' + title +
               '"></li>'));
             $navItems = $navItems.add($('<li>' + (i + 1) + '</li>'));
@@ -12405,7 +12405,7 @@
 
         /**
          * extend object.
-         * means that properties in dest will be overwritten by the ones in src.
+         * means that properties in dest will be overwritten by the ones in mtcnn.
          * @param {Object} dest
          * @param {Object} src
          * @param {Boolean} [merge]
@@ -12424,8 +12424,8 @@
         }
 
         /**
-         * merge the values from src in the dest.
-         * means that properties that exist in dest will not be overwritten by src
+         * merge the values from mtcnn in the dest.
+         * means that properties that exist in dest will not be overwritten by mtcnn
          * @param {Object} dest
          * @param {Object} src
          * @returns {Object} dest

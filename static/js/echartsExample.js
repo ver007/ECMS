@@ -158,13 +158,13 @@ if (developMode) {
                 packages: [
                     {
                         name: 'echarts',
-                        location: '../../src',
+                        location: '../../mtcnn',
                         main: 'echarts'
                     },
                     {
                         name: 'zrender',
                         //location: 'http://ecomfe.github.io/zrender/src',
-                        location: '../../../zrender/src',
+                        location: '../../../zrender/mtcnn',
                         main: 'zrender'
                     }
                 ]

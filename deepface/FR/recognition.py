@@ -4,7 +4,7 @@ base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(base_dir)
 
 import cv2
-from deepface.src.core.detect import create_mtcnn_net, MtcnnDetector
+from deepface.mtcnn.core.detect import create_mtcnn_net, MtcnnDetector
 import dlib
 import csv
 import numpy as np

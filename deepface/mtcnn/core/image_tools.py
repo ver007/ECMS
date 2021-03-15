@@ -5,6 +5,7 @@ import numpy as np
 
 transform = transforms.ToTensor()
 
+
 def convert_image_to_tensor(image):
     """convert an image to pytorch tensor
 

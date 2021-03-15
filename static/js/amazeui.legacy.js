@@ -1693,7 +1693,7 @@
                   for (var i = 0; i < slider.pagingCount; i++) {
                     slide = slider.slides.eq(i);
                     item = (slider.vars.controlNav === "thumbnails") ?
-                      '<img src="' + slide.attr('data-thumb') + '"/>' :
+                      '<img mtcnn="' + slide.attr('data-thumb') + '"/>' :
                       '<a>' + j + '</a>';
                     if ('thumbnails' === slider.vars.controlNav && true ===
                       slider.vars.thumbCaptions) {
@@ -4806,7 +4806,7 @@
 
         /**
          * extend object.
-         * means that properties in dest will be overwritten by the ones in src.
+         * means that properties in dest will be overwritten by the ones in mtcnn.
          * @param {Object} dest
          * @param {Object} src
          * @param {Boolean} [merge]
@@ -4825,8 +4825,8 @@
         }
 
         /**
-         * merge the values from src in the dest.
-         * means that properties that exist in dest will not be overwritten by src
+         * merge the values from mtcnn in the dest.
+         * means that properties that exist in dest will not be overwritten by mtcnn
          * @param {Object} dest
          * @param {Object} src
          * @returns {Object} dest
